@@ -1,0 +1,25 @@
+{
+  "name": "rules-categorizer",
+  "version": "1.0.0",
+  "description": "Categorizes Auth0 rules based on the applications that use them",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thameera/rules-categorizer.git"
+  },
+  "author": "Thameera Senanayaka",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thameera/rules-categorizer/issues"
+  },
+  "homepage": "https://github.com/thameera/rules-categorizer#readme",
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "cors": "^2.7.1",
+    "dotenv": "^1.2.0",
+    "express": "^4.13.3"
+  }
+}
