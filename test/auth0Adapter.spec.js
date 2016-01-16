@@ -4,6 +4,9 @@ const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 const rewire = require('rewire');
 const sinon = require('sinon');
+const dotenv = require('dotenv');
+
+dotenv.load();
 
 const should = chai.should();
 chai.use(chaiAsPromised);
@@ -60,4 +63,37 @@ describe('auth0Adapter spec', function() {
     });
   });
 
+  describe('#getApplications', function() {
+
+    const getApplications = adapter.__get__('getApplications');
+
+    it('should call makeAuth0Request with correct parameters', function() {
+      const mockFn = sinon.stub().returns(1);
+      const revert = adapter.__set__('makeAuth0Request', mockFn);
+
+      const res = getApplications();
+
+      const expectedQuery = { fields: 'name,client_id', include_fields: true };
+      mockFn.calledWith('https://thameera.auth0.com/api/v2/clients', expectedQuery).should.be.true;
+
+      revert();
+    });
+  });
+
+  describe('#getRules', function() {
+
+    const getRules = adapter.__get__('getRules');
+
+    it('should call makeAuth0Request with correct parameters', function() {
+      const mockFn = sinon.stub().returns(1);
+      const revert = adapter.__set__('makeAuth0Request', mockFn);
+
+      const res = getRules();
+
+      const expectedQuery = { fields: 'id,name,script', include_fields: true };
+      mockFn.calledWith('https://thameera.auth0.com/api/v2/rules', expectedQuery).should.be.true;
+
+      revert();
+    });
+  });
 });
