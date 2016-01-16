@@ -1,11 +1,17 @@
 <div class="home">
   <div>Home</div>
 
+  <div class="search">
+    Search:
+    <input ng-model="appquery" placeholder="Application"/>
+    <input ng-model="rulequery" placeholder="Rule"/>
+  </div>
+
   <ul class="apps">
-    <li class="app" ng-repeat="app in apps">
+    <li class="app" ng-repeat="app in apps | filter:{name: appquery}">
       <div class="app-title">{{app.name}}</div>
       <ul>
-        <li ng-repeat="rule in app.rules">
+        <li ng-repeat="rule in app.rules | filter:rulequery">
           {{rule}}
         </li>
       </ul>
