@@ -1,5 +1,16 @@
 <div class="home">
   <div>Home</div>
 
+  <ul class="apps">
+    <li class="app" ng-repeat="app in apps">
+      <div class="app-title">{{app.name}}</div>
+      <ul>
+        <li ng-repeat="rule in app.rules">
+          {{rule}}
+        </li>
+      </ul>
+    </li>
+  </ul>
+
   <button class="btn-sm btn-warning" ng-click="logout()">Logout</button>
 </div>

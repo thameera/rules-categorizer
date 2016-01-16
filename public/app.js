@@ -63,12 +63,15 @@ angular.module('rulesApp', [
 }])
 .controller('HomeCtrl', ['$scope', 'auth', '$location', 'store', '$http', function($scope, auth, $location, store, $http) {
 
+  $scope.apps = [];
+
   $http({
     url: '/getRuleCategories',
     method: 'GET'
   })
     .then(function(res) {
       console.log(res);
+      $scope.apps = res.data;
     }, function(err) {
       console.error(err);
     });
