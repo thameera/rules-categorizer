@@ -22,7 +22,7 @@ This app generates a list of Auth0 rules, categorized by the applications they a
 
 ## Whitelisting only specific users to the app
 
-1. Go to Rules section in the Auth0 dashboard.
+1. Go to [Rules section](https://manage.auth0.com/#/rules) in the Auth0 dashboard.
 1. Choose 'Whitelist for a specific app' under Access Control.
 1. Replace `NameOfTheAppWithWhiteList` with the name of the app created for this project.
 1. Replace the `whitelist` array with the emails of users you want to whitelist.
@@ -31,7 +31,7 @@ This app generates a list of Auth0 rules, categorized by the applications they a
 ## Running the app
 
 1. Go to the cloned directory and run `npm start`.
-1. Now visit http://localhost:8000 in the browser and login to access the app.
+1. Now visit `http://localhost:8000` in the browser and login to access the app.
 
 **Tip**: If you're running the app in a server and want to make sure that the app runs continuously, you can use [forever](https://www.npmjs.com/package/forever).
 
