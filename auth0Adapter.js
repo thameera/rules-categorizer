@@ -3,11 +3,12 @@
 const Promise = require('bluebird');
 const rest = require('restler');
 
-const makeAuth0Request = (url) => {
+const makeAuth0Request = (url, query) => {
   return new Promise((resolve, reject) => {
 
     rest.get(url, {
-      accessToken: process.env.AUTH0_API_TOKEN
+      accessToken: process.env.AUTH0_API_TOKEN,
+      query
     })
     .on('complete', (data, response) => {
       console.log(data);
@@ -35,12 +36,20 @@ const makeAuth0Request = (url) => {
 
 const getApplications = () => {
   const url = `https://${process.env.AUTH0_DOMAIN}/api/v2/clients`;
-  return makeAuth0Request(url);
+  const query = {
+    fields: 'name,client_id',
+    include_fields: true
+  };
+  return makeAuth0Request(url, query);
 };
 
 const getRules = () => {
   const url = `https://${process.env.AUTH0_DOMAIN}/api/v2/rules`;
-  return makeAuth0Request(url);
+  const query = {
+    fields: 'id,name,script',
+    include_fields: true
+  };
+  return makeAuth0Request(url, query);
 };
 
 const getCategorizedRules = () => {
