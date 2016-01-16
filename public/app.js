@@ -61,5 +61,13 @@ angular.module('rulesApp', [
   };
 
 }])
-.controller('HomeCtrl', ['$scope', function($scope) {
+.controller('HomeCtrl', ['$scope', 'auth', '$location', 'store', function($scope, auth, $location, store) {
+
+  $scope.logout = function() {
+    auth.signout();
+    store.remove('profile');
+    store.remove('token');
+    $location.path('/login');
+  };
+
 }]);
