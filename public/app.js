@@ -64,6 +64,7 @@ angular.module('rulesApp', [
 .controller('HomeCtrl', ['$scope', 'auth', '$location', 'store', '$http', function($scope, auth, $location, store, $http) {
 
   $scope.apps = [];
+  $scope.status = 'loading';
 
   $http({
     url: '/getRuleCategories',
@@ -72,8 +73,10 @@ angular.module('rulesApp', [
     .then(function(res) {
       console.log(res);
       $scope.apps = res.data;
+      $scope.status = 'loaded';
     }, function(err) {
       console.error(err);
+      $scope.status = 'error'
     });
 
   $scope.logout = function() {
