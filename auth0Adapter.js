@@ -35,7 +35,7 @@ let makeAuth0Request = (url, query) => {
 let getApplications = () => {
   const url = `https://${process.env.AUTH0_DOMAIN}/api/v2/clients`;
   const query = {
-    fields: 'name,client_id',
+    fields: 'name,client_id,global',
     include_fields: true
   };
   return makeAuth0Request(url, query);
@@ -51,8 +51,8 @@ let getRules = () => {
 };
 
 let categorize = (apps, rules) => {
-  // Remove the 'All applications' object at the end
-  apps.pop();
+  // Remove the 'All applications' object
+  apps = apps.filter((app) => !app.global);
 
   // Create a list of apps and rules that mention them
   const result = apps.map((app) => {

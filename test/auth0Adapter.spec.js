@@ -73,7 +73,7 @@ describe('auth0Adapter spec', function() {
 
       const res = getApplications();
 
-      const expectedQuery = { fields: 'name,client_id', include_fields: true };
+      const expectedQuery = { fields: 'name,client_id,global', include_fields: true };
       mockFn.calledWith('https://thameera.auth0.com/api/v2/clients', expectedQuery).should.be.true;
 
       revert();
