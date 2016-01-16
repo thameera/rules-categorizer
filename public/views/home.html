@@ -1,28 +1,32 @@
 <div class="home">
-  <div>Home</div>
 
-  <div class="search">
-    Search:
-    <input ng-model="appquery" placeholder="Application"/>
-    <input ng-model="rulequery" placeholder="Rule"/>
+  <div class="top-row">
+    <div class="search">
+      Search:
+      <input ng-model="appquery" placeholder="Application"/>
+      <input ng-model="rulequery" placeholder="Rule"/>
+    </div>
+    <div class="enabled-check">
+      <input type="checkbox" ng-model="enabledquery"/> Show enabled rules only
+    </div>
   </div>
-  <div class="enabled-check">
-    <input type="checkbox" ng-model="enabledquery"/> Show enabled rules only
+
+  <div class="apps">
+    <div class="loading" ng-if="status === 'loading'">Please wait...</div>
+    <div class="error" ng-if="status === 'error'">There was an error loading data</div>
+
+    <ul ng-if="status === 'loaded'">
+      <li class="app" ng-repeat="app in apps | filter:{name: appquery}">
+        <div class="app-title">{{app.name}}</div>
+        <div class="rules-heading">Rules</div>
+        <ul>
+          <li ng-repeat="rule in app.rules | filter:rulequery | filter:enabledFilter">
+            {{rule.name}}
+          </li>
+        </ul>
+      </li>
+    </ul>
   </div>
-
-  <div class="loading" ng-if="status === 'loading'">Please wait...</div>
-  <div class="error" ng-if="status === 'error'">There was an error loading data</div>
-
-  <ul class="apps" ng-if="status === 'loaded'">
-    <li class="app" ng-repeat="app in apps | filter:{name: appquery}">
-      <div class="app-title">{{app.name}}</div>
-      <ul>
-        <li ng-repeat="rule in app.rules | filter:rulequery | filter:enabledFilter">
-          {{rule.name}}
-        </li>
-      </ul>
-    </li>
-  </ul>
 
   <button class="btn-sm btn-warning" ng-click="logout()">Logout</button>
 </div>

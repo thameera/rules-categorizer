@@ -2,9 +2,14 @@ body {
   text-align: center;
 }
 
+.home .top-row {
+  margin-top: 30px;
+}
+
 .apps {
   text-align: left;
   width: 400px;
+  margin: 30px auto;
 }
 
 li.app {
@@ -13,4 +18,17 @@ li.app {
 
 .error {
   color: red;
+}
+
+.app-title {
+  font-weight: bold;
+}
+
+.rules-heading {
+  font-style: italic;
+  padding-left: 20px;
+}
+
+.login-box h4 {
+  margin-top: 50px;
 }
