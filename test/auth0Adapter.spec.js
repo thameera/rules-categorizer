@@ -96,4 +96,28 @@ describe('auth0Adapter spec', function() {
       revert();
     });
   });
+
+  describe('#getStrippedRule', function() {
+
+    const getStrippedRule = adapter.__get__('getStrippedRule');
+
+    it('should returne a stripped rule', function() {
+      const origRule = {
+        id: 'abc',
+        enabled: true,
+        script: 'pqr',
+        name: 'Some rule'
+      };
+
+      const strippedRule = getStrippedRule(origRule);
+
+      should.exist(strippedRule);
+      strippedRule.should.have.ownProperty('name');
+      strippedRule.should.have.ownProperty('enabled');
+      strippedRule.should.not.have.ownProperty('id');
+      strippedRule.should.not.have.ownProperty('script');
+    });
+
+  });
+
 });
