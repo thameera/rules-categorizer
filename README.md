@@ -39,6 +39,8 @@ This app generates a list of Auth0 rules, categorized by the applications they a
 
 Once you are logged in to the webapp, the list of applications and the rules that apply to them will be shown.
 
+The 'All Applications' list at the top includes the rules that apply to all your applications.
+
 If you have a large collection of applications or rules, you can filter them by name by using the two search boxes at the top.
 
 If you want to see only the rules that are currently enabled, check the 'Show enabled rules only' checkbox.
