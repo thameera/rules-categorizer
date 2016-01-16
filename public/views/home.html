@@ -6,6 +6,9 @@
     <input ng-model="appquery" placeholder="Application"/>
     <input ng-model="rulequery" placeholder="Rule"/>
   </div>
+  <div class="enabled-check">
+    <input type="checkbox" ng-model="enabledquery"/> Show enabled rules only
+  </div>
 
   <div class="loading" ng-if="status === 'loading'">Please wait...</div>
   <div class="error" ng-if="status === 'error'">There was an error loading data</div>
@@ -14,8 +17,8 @@
     <li class="app" ng-repeat="app in apps | filter:{name: appquery}">
       <div class="app-title">{{app.name}}</div>
       <ul>
-        <li ng-repeat="rule in app.rules | filter:rulequery">
-          {{rule}}
+        <li ng-repeat="rule in app.rules | filter:rulequery | filter:enabledFilter">
+          {{rule.name}}
         </li>
       </ul>
     </li>

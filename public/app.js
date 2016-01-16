@@ -65,6 +65,7 @@ angular.module('rulesApp', [
 
   $scope.apps = [];
   $scope.status = 'loading';
+  $scope.enabledquery = false;
 
   $http({
     url: '/getRuleCategories',
@@ -84,6 +85,10 @@ angular.module('rulesApp', [
     store.remove('profile');
     store.remove('token');
     $location.path('/login');
+  };
+
+  $scope.enabledFilter = function(rule) {
+    return rule.enabled || !$scope.enabledquery;
   };
 
 }]);

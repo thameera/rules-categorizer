@@ -90,7 +90,7 @@ describe('auth0Adapter spec', function() {
 
       const res = getRules();
 
-      const expectedQuery = { fields: 'id,name,script', include_fields: true };
+      const expectedQuery = { fields: 'id,name,script,enabled', include_fields: true };
       mockFn.calledWith('https://thameera.auth0.com/api/v2/rules', expectedQuery).should.be.true;
 
       revert();
