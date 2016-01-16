@@ -61,7 +61,17 @@ angular.module('rulesApp', [
   };
 
 }])
-.controller('HomeCtrl', ['$scope', 'auth', '$location', 'store', function($scope, auth, $location, store) {
+.controller('HomeCtrl', ['$scope', 'auth', '$location', 'store', '$http', function($scope, auth, $location, store, $http) {
+
+  $http({
+    url: '/getRuleCategories',
+    method: 'GET'
+  })
+    .then(function(res) {
+      console.log(res);
+    }, function(err) {
+      console.error(err);
+    });
 
   $scope.logout = function() {
     auth.signout();
