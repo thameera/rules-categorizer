@@ -3,6 +3,7 @@
 const http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
+const path = require('path');
 const cors = require('cors');
 const dotenv = require('dotenv');
 
@@ -14,9 +15,10 @@ app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-  res.send(`It's working`);
+  res.sendfile('public/index.html');
 });
 
 const port = process.env.PORT || 8000;
