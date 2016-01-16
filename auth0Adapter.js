@@ -60,7 +60,6 @@ let getStrippedRule = (rule) => {
 let categorize = (apps, rules) => {
   // Remove the 'All applications' object
   apps = apps.filter((app) => !app.global);
-  console.log( rules);
 
   // Create a list of apps and rules that mention them
   const result = apps.map((app) => {
