@@ -18,7 +18,7 @@ This app generates a list of Auth0 rules, categorized by the applications they a
 
 ## How to setup
 
-There are two ways to setup the app. Deploying to Heroku using the Heroku button below or manually setting it up in your own server.
+There are two ways to setup the app: deploying to Heroku using the Heroku button below or manually installing in your own server.
 
 ### Deploying to Heroku
 
