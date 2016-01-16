@@ -1,9 +1,12 @@
 'use strict';
 
 angular.module('rulesApp', [
-  'ngRoute'
+  'ngRoute',
+  'auth0',
+  'angular-storage',
+  'angular-jwt'
 ])
-.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+.config(['$routeProvider', '$locationProvider', 'authProvider', '$httpProvider', 'jwtInterceptorProvider', function($routeProvider, $locationProvider, authProvider, $httpProvider, jwtInterceptorProvider) {
 
   $routeProvider
     .when('/', {
@@ -16,8 +19,47 @@ angular.module('rulesApp', [
       templateUrl: 'views/login.html'
     });
 
+    authProvider.init({
+      domain: AUTH0_DOMAIN,
+      clientID: AUTH0_CLIENT_ID,
+      loginUrl: '/login'
+    });
+
+    jwtInterceptorProvider.tokenGetter = function(store) {
+      return store.get('token');
+    };
+
+    $httpProvider.interceptors.push('jwtInterceptor');
+
 }])
-.controller('LoginCtrl', ['$scope', function($scope) {
+.run(['$rootScope', 'auth', 'store', 'jwtHelper', '$location', function($rootScope, auth, store, jwtHelper, $location) {
+
+  $rootScope.$on('$locationChangeStart', function() {
+    if (!auth.isAuthenticated) {
+      var token = store.get('token');
+      if (token) {
+        if (!jwtHelper.isTokenExpired(token)) {
+          auth.authenticate(store.get('profile'), token);
+        } else {
+          $location.path('/login');
+        }
+      }
+    }
+  });
+
+}])
+.controller('LoginCtrl', ['$scope', 'auth', '$location', 'store', function($scope, auth, $location, store) {
+
+  $scope.login = function() {
+    auth.signin({}, function(profile, token) {
+      store.set('profile', profile);
+      store.set('token', token);
+      $location.path('/');
+    }, function(err) {
+      console.log('There was an error logging in', err);
+    });
+  };
+
 }])
 .controller('HomeCtrl', ['$scope', function($scope) {
 }]);
