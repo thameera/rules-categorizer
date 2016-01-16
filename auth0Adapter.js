@@ -1,9 +1,9 @@
 'use strict';
 
 const Promise = require('bluebird');
-const rest = require('restler');
+let rest = require('restler');
 
-const makeAuth0Request = (url, query) => {
+let makeAuth0Request = (url, query) => {
   return new Promise((resolve, reject) => {
 
     rest.get(url, {
@@ -11,8 +11,6 @@ const makeAuth0Request = (url, query) => {
       query
     })
     .on('complete', (data, response) => {
-      console.log(data);
-
       if (data instanceof Error) {
         reject(data);
         return;
@@ -34,7 +32,7 @@ const makeAuth0Request = (url, query) => {
   });
 };
 
-const getApplications = () => {
+let getApplications = () => {
   const url = `https://${process.env.AUTH0_DOMAIN}/api/v2/clients`;
   const query = {
     fields: 'name,client_id',
@@ -43,7 +41,7 @@ const getApplications = () => {
   return makeAuth0Request(url, query);
 };
 
-const getRules = () => {
+let getRules = () => {
   const url = `https://${process.env.AUTH0_DOMAIN}/api/v2/rules`;
   const query = {
     fields: 'id,name,script',
@@ -52,7 +50,7 @@ const getRules = () => {
   return makeAuth0Request(url, query);
 };
 
-const categorize = (apps, rules) => {
+let categorize = (apps, rules) => {
   // Remove the 'All applications' object at the end
   apps.pop();
 
@@ -86,7 +84,7 @@ const categorize = (apps, rules) => {
   return result;
 };
 
-const getCategorizedRules = () => {
+let getCategorizedRules = () => {
   return Promise.all([getApplications(), getRules()])
     .spread(categorize);
 };
