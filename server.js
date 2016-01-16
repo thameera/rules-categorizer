@@ -8,6 +8,8 @@ const cors = require('cors');
 const jwt = require('express-jwt');
 const dotenv = require('dotenv');
 
+const auth0Adapter = require('./auth0Adapter');
+
 dotenv.load();
 
 const app = express();
@@ -24,7 +26,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/getRuleCategories', authenticate, (req, res) => {
-  res.json({ 'stub': 'result' });
+  return auth0Adapter.getCategorizedRules()
+    .then((categorizedRules) => {
+      res.json(categorizedRules);
+    })
+    .catch((err) => {
+      res.status(500).send({ error: 'Failed to get data from Auth0' });
+    });
 });
 
 app.get('/', (req, res) => {
