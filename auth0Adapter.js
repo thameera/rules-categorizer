@@ -52,11 +52,43 @@ const getRules = () => {
   return makeAuth0Request(url, query);
 };
 
+const categorize = (apps, rules) => {
+  // Remove the 'All applications' object at the end
+  apps.pop();
+
+  // Create a list of apps and rules that mention them
+  const result = apps.map((app) => {
+    const rulesForApp = rules
+      .filter((rule) => rule.script.indexOf(app.client_id) >= 0 )
+      .map((rule) => rule.name);
+
+    return {
+      name: app.name,
+      client_id: app.client_id,
+      rules: rulesForApp
+    };
+  });
+
+  // Determine rules that concern all apps
+  const rulesForAllApps = rules
+    .filter((rule) => {
+      return apps.every((app) => rule.script.indexOf(app.client_id) < 0);
+    })
+    .map((rule) => rule.name);
+
+  // Prepend an entry for all apps to the beginning
+  result.splice(0, 0, {
+    name: 'All Applications',
+    client_id: '0',
+    rules: rulesForAllApps
+  });
+
+  return result;
+};
+
 const getCategorizedRules = () => {
   return Promise.all([getApplications(), getRules()])
-    .then((res) => {
-      return [];
-    });
+    .spread(categorize);
 };
 
 module.exports = {
