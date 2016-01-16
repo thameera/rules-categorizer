@@ -3,6 +3,12 @@
 const Promise = require('bluebird');
 let rest = require('restler');
 
+/**
+ * Makes a GET request to Auth0 management API
+ * @param {string} url - URL endpoint to call
+ * @param {Object} query - Parameters to be passed with the API call
+ * @returns {Promise}
+ */
 let makeAuth0Request = (url, query) => {
   return new Promise((resolve, reject) => {
 
@@ -32,6 +38,10 @@ let makeAuth0Request = (url, query) => {
   });
 };
 
+/**
+ * Retrieves the list of all applications from Auth0
+ * @returns {Promise}
+ */
 let getApplications = () => {
   const url = `https://${process.env.AUTH0_DOMAIN}/api/v2/clients`;
   const query = {
@@ -41,6 +51,10 @@ let getApplications = () => {
   return makeAuth0Request(url, query);
 };
 
+/**
+ * Retrieves the list of all rules from Auth0
+ * @returns {Promise}
+ */
 let getRules = () => {
   const url = `https://${process.env.AUTH0_DOMAIN}/api/v2/rules`;
   const query = {
@@ -50,6 +64,11 @@ let getRules = () => {
   return makeAuth0Request(url, query);
 };
 
+/**
+ * Returns a new rule object with only the parameters that need to be sent to frontend
+ * @param {Object} rule - rule
+ * @returns {Object} - stripeed down rule
+ */
 let getStrippedRule = (rule) => {
   return {
     name: rule.name,
@@ -57,6 +76,12 @@ let getStrippedRule = (rule) => {
   };
 };
 
+/**
+ * Returns an array of categorized apps and rules
+ * @param {Array} apps - Array of apps retrieved from Auth0
+ * @param {Array} rules - Array of rules retrieved from Auth0
+ * @returns {Array}
+ */
 let categorize = (apps, rules) => {
   // Remove the 'All applications' object
   apps = apps.filter((app) => !app.global);
@@ -91,6 +116,10 @@ let categorize = (apps, rules) => {
   return result;
 };
 
+/**
+ * Returns the categorized array of apps/rules that should be sent to the frontend
+ * @returns {Promise}
+ */
 let getCategorizedRules = () => {
   return Promise.all([getApplications(), getRules()])
     .spread(categorize);
