@@ -29,7 +29,7 @@ There are two ways to setup the app: deploying to Heroku using the Heroku button
 1. Clone the repo and `cd` to the cloned directory.
 1. Install gulp globally with `npm install -g gulp`.
 1. Install dependencies with `npm install`.
-1. Create a `.env` file based on the `.env.sample` in the project and add the credentials of the new app you created in step 1 and the token you generated in step 2.
+1. Create a `.env` file based on the `.env.sample` in the project and add the credentials of the new app you created and the token you generated in Prerequisites section.
 1. Go to the cloned directory and run `npm start`.
 1. Now visit `http://localhost:8000` in the browser and login to access the app.
 
